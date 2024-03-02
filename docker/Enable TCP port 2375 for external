@@ -1,1 +1,14 @@
+nano /etc/docker/daemon.json
 
+{
+"hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"]
+}
+
+mkdir /etc/systemd/system/docker.service.d
+nano /etc/systemd/system/docker.service.d/override.conf
+ [Service]
+ ExecStart=
+ ExecStart=/usr/bin/dockerd
+
+systemctl daemon-reload
+systemctl restart docker.service
